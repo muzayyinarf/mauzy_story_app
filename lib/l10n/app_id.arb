@@ -1,0 +1,64 @@
+{
+  "@@locale": "id",
+  "titleAppBar": "Mauzy Story App",
+  "registerTitle": "Daftarkan akun anda",
+  "registerSubtitle": "Isi kolom di bawah ini",
+  "typeName": "Isi nama anda",
+  "typeEmail": "Isi email anda",
+  "typePassword" : "Isi password anda",
+  "reTypePassword" : "Isi ulang password",
+  "successRegister": "Berhasil mendaftar akun, silahkan login",
+  "emptyField": "Kolom tidak boleh kosong",
+  "samePassword" : "Password harus sama",
+  "buttonRegister" : "Daftar",
+  "haveAccount" : "Sudah memiliki akun? ",
+  "haveAccount2" : "Masuk disini",
+  "buttonLogin" : "Masuk",
+  "noAccount" : "Tidak punya akun? ",
+  "noAccount2": "Buat akun disini.",
+  "usernameTitle": "Nama user",
+  "buttonLogout": "Keluar",
+  "newStoryTitle" : "Tambah Cerita Baru",
+  "buttonGallery" : "Galeri",
+  "buttonCamera" : "Kamera",
+  "buttonCustomCamera" : "Kamera Kustom",
+  "descriptionTitle" : "Deskripsi",
+  "descriptionField" : "Isi deskripsi",
+  "buttonUpload" : "Bagikan",
+  "noData": "Tidak ada data",
+  "takePicture":"Ambil Gambar",
+  "errorAppBar":"Kesalahan",
+  "errorNotFound":"Kesalahan 404 tidak ditemukan",
+  "timeSecond": "{second} detik yang lalu",
+  "@timeSecond": {
+    "placeholders": {
+      "second": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeMinute": "{minute} menit yang lalu",
+  "@timeMinute": {
+    "placeholders": {
+      "minute": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeHour": "{hour} jam yang lalu",
+  "@timeHour": {
+    "placeholders": {
+      "hour": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeDay": "{day} hari yang lalu",
+  "@timeDay": {
+    "placeholders": {
+      "day": {
+        "type" : "int"
+      }
+    }
+  }
+}

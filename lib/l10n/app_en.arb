@@ -1,0 +1,64 @@
+{
+  "@@locale": "en",
+  "titleAppBar": "Mauzy Story",
+  "registerTitle": "Register your account",
+  "registerSubtitle": "Fill in the fields below",
+  "typeName": "Type your name",
+  "typeEmail": "Type your email",
+  "typePassword" : "Type your password",
+  "reTypePassword" : "Re-type your password",
+  "successRegister": "Successfully registered an account, please log in",
+  "emptyField": "The fields cannot be empty",
+  "samePassword" : "The passwords must match",
+  "buttonRegister" : "Register",
+  "haveAccount" : "Already have an account? ",
+  "haveAccount2" : "Sign in here.",
+  "buttonLogin" : "Login",
+  "noAccount" : "Don't have an account? ",
+  "noAccount2": "Create an account here.",
+  "usernameTitle" : "Username",
+  "buttonLogout": "Logout",
+  "newStoryTitle" : "Add New Story",
+  "buttonGallery" : "Gallery",
+  "buttonCamera" : "Camera",
+  "buttonCustomCamera" : "Camera Custom",
+  "descriptionTitle" : "Description",
+  "descriptionField" : "Type description",
+  "buttonUpload" : "Upload",
+  "noData": "Data not available",
+  "takePicture":"Take Picture",
+   "errorAppBar":"Error",
+  "errorNotFound":"Error 404 Not found",
+  "timeSecond": "{second,plural, =1{{second} second} other{{second} seconds}} ago",
+  "@timeSecond": {
+    "placeholders": {
+      "second": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeMinute": "{minute,plural, =1{{minute} minute} other{{minute} minutes}} ago",
+  "@timeMinute": {
+    "placeholders": {
+      "minute": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeHour": "{hour,plural, =1{{hour} hour} other{{hour} hours}} ago",
+  "@timeHour": {
+    "placeholders": {
+      "hour": {
+        "type" : "int"
+      }
+    }
+  },
+  "timeDay": "{day,plural, =1{{day} day} other{{day} days}} ago",
+  "@timeDay": {
+    "placeholders": {
+      "day": {
+        "type" : "int"
+      }
+    }
+  }
+}
