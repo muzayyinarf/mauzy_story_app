@@ -4,7 +4,7 @@ import 'package:mauzy_story_app/core.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  Future<LoginResult?> _fetchData() async {
+  Future<LoginResultModel?> _fetchData() async {
     return await LoginInfoPreference().getLoginInfo();
   }
 

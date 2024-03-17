@@ -1,32 +1,20 @@
-import 'dart:convert';
-import 'login_result_model.dart';
+import 'package:mauzy_story_app/core.dart';
 
-class LoginResponseModel {
-  final bool error;
-  final String message;
-  final LoginResult loginResult;
+part 'login_response_model.freezed.dart';
+part 'login_response_model.g.dart';
 
-  LoginResponseModel({
-    required this.error,
-    required this.message,
-    required this.loginResult,
-  });
+@freezed
+class LoginResponseModel with _$LoginResponseModel {
+  const factory LoginResponseModel({
+    required bool error,
+    required String message,
+    required LoginResultModel loginResult,
+  }) = _LoginResponseModel;
 
-  factory LoginResponseModel.fromJson(String str) =>
-      LoginResponseModel.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory LoginResponseModel.fromMap(Map<String, dynamic> json) =>
+  factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
       LoginResponseModel(
         error: json["error"],
         message: json["message"],
-        loginResult: LoginResult.fromMap(json["loginResult"]),
+        loginResult: LoginResultModel.fromJson(json["loginResult"]),
       );
-
-  Map<String, dynamic> toMap() => {
-        "error": error,
-        "message": message,
-        "loginResult": loginResult.toMap(),
-      };
 }

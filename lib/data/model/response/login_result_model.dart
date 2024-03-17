@@ -1,30 +1,16 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class LoginResult {
-  final String userId;
-  final String name;
-  final String token;
+part 'login_result_model.freezed.dart';
+part 'login_result_model.g.dart';
 
-  LoginResult({
-    required this.userId,
-    required this.name,
-    required this.token,
-  });
+@freezed
+class LoginResultModel with _$LoginResultModel {
+  const factory LoginResultModel({
+    required String userId,
+    required String name,
+    required String token,
+  }) = _LoginResultModel;
 
-  factory LoginResult.fromJson(String str) =>
-      LoginResult.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory LoginResult.fromMap(Map<String, dynamic> json) => LoginResult(
-        userId: json["userId"],
-        name: json["name"],
-        token: json["token"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "userId": userId,
-        "name": name,
-        "token": token,
-      };
+  factory LoginResultModel.fromJson(Map<String, dynamic> json) =>
+      _$LoginResultModelFromJson(json);
 }

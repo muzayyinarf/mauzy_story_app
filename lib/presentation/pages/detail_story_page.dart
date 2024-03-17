@@ -12,6 +12,7 @@ class DetailStoryPage extends StatefulWidget {
 
 class _DetailStoryPageState extends State<DetailStoryPage> {
   late TextEditingController locationController;
+  String? dataLocation;
 
   @override
   void initState() {
@@ -48,12 +49,12 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
     );
   }
 
-  Widget _buildDetail(DetailStroyResponseModel model) {
+  Widget _buildDetail(DetailStoryResponseModel model) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildImage(model.story.photoUrl),
+          _buildImage(context, model.story.photoUrl),
           _buildStoryDetails(model.story),
           if (model.story.lat != null)
             _buildLocationWidget(model.story.lat, model.story.lon),
@@ -62,10 +63,11 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
     );
   }
 
-  Widget _buildImage(String photoUrl) {
+  Widget _buildImage(BuildContext context, String photoUrl) {
     return SizedBox(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       child: FadeInImage(
+        fit: BoxFit.cover,
         placeholder: const AssetImage(ImagePaths.loading),
         image: NetworkImage(photoUrl),
         imageErrorBuilder: (context, error, stackTrace) {
@@ -113,59 +115,64 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
             style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
           ),
           _buildMapContainer(lat, lon),
-          _buildLocationTextField(lat, lon),
         ],
       ),
     );
   }
 
   Widget _buildMapContainer(double lat, double lon) {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.only(top: 6),
-      decoration: BoxDecoration(
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: CameraPosition(
-          zoom: 18,
-          target: LatLng(lat, lon),
-        ),
-        markers: {
-          Marker(
-            markerId: const MarkerId("source"),
-            position: LatLng(lat, lon),
-          )
-        },
-        myLocationEnabled: false,
-        myLocationButtonEnabled: false,
-        zoomControlsEnabled: false,
-        mapToolbarEnabled: false,
-      ),
-    );
-  }
-
-  Widget _buildLocationTextField(double lat, double lon) {
     return FutureBuilder(
-      future: getAddress(lat, lon),
-      builder: (context, snapshot) {
-        locationController.text = snapshot.data ?? '';
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        return Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: TextFieldWidget(
-            enabled: false,
-            controller: locationController,
-            maxLines: (locationController.text.length > 40) ? 2 : 1,
-          ),
-        );
-      },
-    );
+        future: getAddress(lat, lon),
+        builder: (context, snapshot) {
+          locationController.text = snapshot.data ?? '';
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return Column(
+            children: [
+              Container(
+                height: 200,
+                padding: const EdgeInsets.all(10.0),
+                margin: const EdgeInsets.only(top: 6),
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: GoogleMap(
+                  mapType: MapType.normal,
+                  initialCameraPosition: CameraPosition(
+                    zoom: 18,
+                    target: LatLng(lat, lon),
+                  ),
+                  markers: {
+                    Marker(
+                        markerId: const MarkerId("source"),
+                        position: LatLng(lat, lon),
+                        infoWindow: InfoWindow(
+                          title: 'Lokasi',
+                          snippet: dataLocation,
+                        ))
+                  },
+                  myLocationEnabled: false,
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: false,
+                  mapToolbarEnabled: false,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: TextFieldWidget(
+                  enabled: false,
+                  controller: locationController,
+                  maxLines: (locationController.text.length > 40) ? 2 : 1,
+                ),
+              )
+            ],
+          );
+        });
   }
 
   Future<String> getAddress(double lat, double lon) async {
@@ -178,8 +185,10 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
     if (place.locality != "") addressComponents.add(place.locality!);
     if (place.postalCode != "") addressComponents.add(place.postalCode!);
     if (place.country != "") addressComponents.add(place.country!);
-
     final address = addressComponents.join(', ');
+
+    dataLocation = address;
+
     return address;
   }
 

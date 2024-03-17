@@ -1,27 +1,15 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CommonResponseModel {
-  final bool error;
-  final String message;
+part 'common_response_model.freezed.dart';
+part 'common_response_model.g.dart';
 
-  CommonResponseModel({
-    required this.error,
-    required this.message,
-  });
+@freezed
+class CommonResponseModel with _$CommonResponseModel {
+  const factory CommonResponseModel({
+    required bool error,
+    required String message,
+  }) = _CommonResponseModel;
 
-  factory CommonResponseModel.fromJson(String str) =>
-      CommonResponseModel.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory CommonResponseModel.fromMap(Map<String, dynamic> json) =>
-      CommonResponseModel(
-        error: json["error"],
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "error": error,
-        "message": message,
-      };
+  factory CommonResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$CommonResponseModelFromJson(json);
 }

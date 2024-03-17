@@ -897,6 +897,8 @@ abstract class _$$UploadedImplCopyWith<$Res> {
       __$$UploadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({CommonResponseModel model});
+
+  $CommonResponseModelCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -918,6 +920,14 @@ class __$$UploadedImplCopyWithImpl<$Res>
           : model // ignore: cast_nullable_to_non_nullable
               as CommonResponseModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CommonResponseModelCopyWith<$Res> get model {
+    return $CommonResponseModelCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
   }
 }
 

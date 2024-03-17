@@ -1,31 +1,16 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class RegisterRequestModel {
-  final String name;
-  final String email;
-  final String password;
+part 'register_request_model.freezed.dart';
+part 'register_request_model.g.dart';
 
-  RegisterRequestModel({
-    required this.name,
-    required this.email,
-    required this.password,
-  });
+@freezed
+class RegisterRequestModel with _$RegisterRequestModel {
+  const factory RegisterRequestModel({
+    required String name,
+    required String email,
+    required String password,
+  }) = _RegisterRequestModel;
 
-  factory RegisterRequestModel.fromJson(String str) =>
-      RegisterRequestModel.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory RegisterRequestModel.fromMap(Map<String, dynamic> json) =>
-      RegisterRequestModel(
-        name: json["name"],
-        email: json["email"],
-        password: json["password"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "name": name,
-        "email": email,
-        "password": password,
-      };
+  factory RegisterRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$RegisterRequestModelFromJson(json);
 }

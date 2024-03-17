@@ -225,7 +225,7 @@ mixin _$DetailStoryState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DetailStroyResponseModel model) loaded,
+    required TResult Function(DetailStoryResponseModel model) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -233,7 +233,7 @@ mixin _$DetailStoryState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DetailStroyResponseModel model)? loaded,
+    TResult? Function(DetailStoryResponseModel model)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -241,7 +241,7 @@ mixin _$DetailStoryState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DetailStroyResponseModel model)? loaded,
+    TResult Function(DetailStoryResponseModel model)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -331,7 +331,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DetailStroyResponseModel model) loaded,
+    required TResult Function(DetailStoryResponseModel model) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -342,7 +342,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DetailStroyResponseModel model)? loaded,
+    TResult? Function(DetailStoryResponseModel model)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -353,7 +353,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DetailStroyResponseModel model)? loaded,
+    TResult Function(DetailStoryResponseModel model)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -445,7 +445,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DetailStroyResponseModel model) loaded,
+    required TResult Function(DetailStoryResponseModel model) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -456,7 +456,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DetailStroyResponseModel model)? loaded,
+    TResult? Function(DetailStoryResponseModel model)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -467,7 +467,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DetailStroyResponseModel model)? loaded,
+    TResult Function(DetailStoryResponseModel model)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -525,7 +525,9 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({DetailStroyResponseModel model});
+  $Res call({DetailStoryResponseModel model});
+
+  $DetailStoryResponseModelCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -545,8 +547,16 @@ class __$$LoadedImplCopyWithImpl<$Res>
       null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
-              as DetailStroyResponseModel,
+              as DetailStoryResponseModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DetailStoryResponseModelCopyWith<$Res> get model {
+    return $DetailStoryResponseModelCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
   }
 }
 
@@ -556,7 +566,7 @@ class _$LoadedImpl implements _Loaded {
   const _$LoadedImpl(this.model);
 
   @override
-  final DetailStroyResponseModel model;
+  final DetailStoryResponseModel model;
 
   @override
   String toString() {
@@ -585,7 +595,7 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DetailStroyResponseModel model) loaded,
+    required TResult Function(DetailStoryResponseModel model) loaded,
     required TResult Function(String message) error,
   }) {
     return loaded(model);
@@ -596,7 +606,7 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DetailStroyResponseModel model)? loaded,
+    TResult? Function(DetailStoryResponseModel model)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(model);
@@ -607,7 +617,7 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DetailStroyResponseModel model)? loaded,
+    TResult Function(DetailStoryResponseModel model)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -656,9 +666,9 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements DetailStoryState {
-  const factory _Loaded(final DetailStroyResponseModel model) = _$LoadedImpl;
+  const factory _Loaded(final DetailStoryResponseModel model) = _$LoadedImpl;
 
-  DetailStroyResponseModel get model;
+  DetailStoryResponseModel get model;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -730,7 +740,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(DetailStroyResponseModel model) loaded,
+    required TResult Function(DetailStoryResponseModel model) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -741,7 +751,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(DetailStroyResponseModel model)? loaded,
+    TResult? Function(DetailStoryResponseModel model)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -752,7 +762,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(DetailStroyResponseModel model)? loaded,
+    TResult Function(DetailStoryResponseModel model)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

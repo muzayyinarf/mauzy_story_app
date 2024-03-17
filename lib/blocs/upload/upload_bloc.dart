@@ -11,11 +11,15 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
   UploadBloc(this.datasource) : super(const _Initial()) {
     on<_AddStory>((event, emit) async {
       emit(const _Uploading());
-
       try {
         final result = await datasource.addNewStory(
-            event.token, event.bytes, event.fileName, event.description,
-            lat: event.lat, lon: event.lon);
+          event.token,
+          event.bytes,
+          event.fileName,
+          event.description,
+          lat: event.lat,
+          lon: event.lon,
+        );
 
         result.fold(
           (l) => emit(_Error(l)),

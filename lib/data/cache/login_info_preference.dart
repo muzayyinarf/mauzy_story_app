@@ -1,19 +1,23 @@
+import 'dart:convert';
+
 import 'package:mauzy_story_app/core.dart';
 
 class LoginInfoPreference {
   static const _loginInfoKey = 'loginInfo';
 
-  Future<bool> saveLoginInfo(LoginResult model) async {
+  Future<bool> saveLoginInfo(LoginResultModel model) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final jsonStr = model.toJson();
+    final jsonStr = jsonEncode(model);
     return prefs.setString(_loginInfoKey, jsonStr);
   }
 
-  Future<LoginResult?> getLoginInfo() async {
+  Future<LoginResultModel?> getLoginInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     final jsonStr = prefs.getString(_loginInfoKey);
-    return (jsonStr != null) ? LoginResult.fromJson(jsonStr) : null;
+    return (jsonStr != null)
+        ? LoginResultModel.fromJson(json.decode(jsonStr))
+        : null;
   }
 
   Future<bool> removeLoginInfo() async {

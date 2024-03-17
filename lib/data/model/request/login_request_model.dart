@@ -1,27 +1,15 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class LoginRequestModel {
-  final String email;
-  final String password;
+part 'login_request_model.freezed.dart';
+part 'login_request_model.g.dart';
 
-  LoginRequestModel({
-    required this.email,
-    required this.password,
-  });
+@freezed
+class LoginRequestModel with _$LoginRequestModel {
+  const factory LoginRequestModel({
+    required String email,
+    required String password,
+  }) = _LoginRequestModel;
 
-  factory LoginRequestModel.fromJson(String str) =>
-      LoginRequestModel.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory LoginRequestModel.fromMap(Map<String, dynamic> json) =>
-      LoginRequestModel(
-        email: json["email"],
-        password: json["password"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "email": email,
-        "password": password,
-      };
+  factory LoginRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestModelFromJson(json);
 }

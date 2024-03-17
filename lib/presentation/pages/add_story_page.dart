@@ -224,9 +224,12 @@ class _AddStoryPageState extends State<AddStoryPage> {
         ),
         markers: {
           Marker(
-            markerId: const MarkerId("source"),
-            position: LatLng(state.lat!, state.lon!),
-          )
+              markerId: const MarkerId("source"),
+              position: LatLng(state.lat!, state.lon!),
+              infoWindow: InfoWindow(
+                title: 'Lokasi',
+                snippet: addLocationController.text,
+              ))
         },
         myLocationEnabled: false,
         myLocationButtonEnabled: false,

@@ -46,6 +46,7 @@ dependencies:
   image: ^4.1.7
   image_picker: ^1.0.7
   intl: ^0.18.1
+  json_annotation: ^4.8.1
   location: ^5.0.3
   shared_preferences: ^2.2.2
 
@@ -56,6 +57,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.4.7
+  json_serializable: ^6.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

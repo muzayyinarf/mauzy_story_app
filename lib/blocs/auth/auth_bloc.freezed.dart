@@ -86,6 +86,8 @@ abstract class _$$DoLoginImplCopyWith<$Res> {
       __$$DoLoginImplCopyWithImpl<$Res>;
   @useResult
   $Res call({LoginRequestModel model});
+
+  $LoginRequestModelCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -107,6 +109,14 @@ class __$$DoLoginImplCopyWithImpl<$Res>
           : model // ignore: cast_nullable_to_non_nullable
               as LoginRequestModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LoginRequestModelCopyWith<$Res> get model {
+    return $LoginRequestModelCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
   }
 }
 
@@ -333,6 +343,8 @@ abstract class _$$DoRegisterImplCopyWith<$Res> {
       __$$DoRegisterImplCopyWithImpl<$Res>;
   @useResult
   $Res call({RegisterRequestModel model});
+
+  $RegisterRequestModelCopyWith<$Res> get model;
 }
 
 /// @nodoc
@@ -354,6 +366,14 @@ class __$$DoRegisterImplCopyWithImpl<$Res>
           : model // ignore: cast_nullable_to_non_nullable
               as RegisterRequestModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $RegisterRequestModelCopyWith<$Res> get model {
+    return $RegisterRequestModelCopyWith<$Res>(_value.model, (value) {
+      return _then(_value.copyWith(model: value));
+    });
   }
 }
 
