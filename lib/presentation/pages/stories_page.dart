@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mauzy_story_app/common/images_path.dart';
+
 import 'package:mauzy_story_app/core.dart';
 
 class StoriesPage extends StatefulWidget {
@@ -10,10 +10,32 @@ class StoriesPage extends StatefulWidget {
 }
 
 class _StoriesPageState extends State<StoriesPage> {
+  final ScrollController _scrollController = ScrollController();
+  int? pageItems = 1;
+
   @override
   void initState() {
-    context.read<ListStoryBloc>().add(const ListStoryEvent.get());
+    context.read<ListStoryBloc>().add(const ListStoryEvent.getAllStories(1));
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent) {
+        if (mounted) {
+          pageItems = pageItems! + 1;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<ListStoryBloc>().add(
+                  ListStoryEvent.getAllStories(pageItems),
+                );
+          });
+        }
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -24,7 +46,7 @@ class _StoriesPageState extends State<StoriesPage> {
         title: Row(
           children: [
             Text(
-              "Mauzy Story",
+              FlavorConfig.instance.values.titleApp,
               style:
                   logoStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w100),
             ),
@@ -62,22 +84,34 @@ class _StoriesPageState extends State<StoriesPage> {
           )
         ],
       ),
-      body: BlocBuilder<ListStoryBloc, ListStoryState>(
+      body: BlocConsumer<ListStoryBloc, ListStoryState>(
+        listener: (context, state) {
+          state.maybeWhen(
+              orElse: () {},
+              loaded: (data) {
+                snackBar(
+                  context,
+                  AppLocalizations.of(context)!.loading,
+                  isLoading: true,
+                );
+              });
+        },
         builder: (context, state) => state.maybeMap(
-          orElse: () => _buildLoading(),
+          orElse: () => _buildMessage(AppLocalizations.of(context)!.noData),
           loading: (_) => _buildLoading(),
-          error: (data) => _buildMessage(data.message),
+          error: (data) => _buildMessage(data.errorMessage),
           loaded: (value) {
-            final listStory = value.data.listStory;
-            if (listStory.isEmpty) {
-              _buildMessage(AppLocalizations.of(context)!.noData);
-            }
             return ListView.builder(
-              itemCount: listStory.length,
+              itemCount: value.stories.length,
               itemBuilder: (context, index) {
-                final data = listStory[index];
+                if (value.stories.isEmpty) {
+                  return _buildMessage(AppLocalizations.of(context)!.noData);
+                }
+                if (value.stories.length == 10) pageItems = 1;
+                final data = value.stories[index];
                 return StoryCardWidget(data: data);
               },
+              controller: _scrollController,
             );
           },
         ),
@@ -101,12 +135,19 @@ class _StoriesPageState extends State<StoriesPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  height: 30,
-                  width: 30,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(ImagePaths.home),
+                GestureDetector(
+                  onTap: () {
+                    _scrollController.animateTo(0.0,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut);
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(ImagePaths.home),
+                      ),
                     ),
                   ),
                 ),

@@ -4,3 +4,4 @@ export 'detail_story/detail_story_bloc.dart';
 export 'list_story/list_story_bloc.dart';
 export 'upload/upload_bloc.dart';
 export 'localization/localization_bloc.dart';
+export 'add_location/add_location_bloc.dart';

@@ -1,4 +1,5 @@
 import 'package:mauzy_story_app/core.dart';
+import 'package:mauzy_story_app/presentation/pages/add_location_page.dart';
 
 final router = GoRouter(
   debugLogDiagnostics: true,
@@ -43,6 +44,11 @@ final router = GoRouter(
                 name: Routes.camera,
                 builder: (context, state) =>
                     CameraPage(cameras: state.extra as List<CameraDescription>),
+              ),
+              GoRoute(
+                path: 'addLocation',
+                name: Routes.addLocation,
+                builder: (context, state) => const AddLocationPage(),
               ),
             ]),
         GoRoute(

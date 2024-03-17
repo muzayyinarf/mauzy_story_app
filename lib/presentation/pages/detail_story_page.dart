@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauzy_story_app/core.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 
 class DetailStoryPage extends StatefulWidget {
   final String id;
@@ -10,17 +11,29 @@ class DetailStoryPage extends StatefulWidget {
 }
 
 class _DetailStoryPageState extends State<DetailStoryPage> {
+  late TextEditingController locationController;
+
   @override
   void initState() {
-    context.read<DetailStoryBloc>().add(DetailStoryEvent.getDetail(widget.id));
     super.initState();
+    context.read<DetailStoryBloc>().add(DetailStoryEvent.getDetail(widget.id));
+    locationController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    locationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Page'),
+        title: Text(
+          AppLocalizations.of(context)!.detailStory,
+          style: blackTextStyle.copyWith(fontWeight: FontWeight.w600),
+        ),
       ),
       body: BlocBuilder<DetailStoryBloc, DetailStoryState>(
         builder: (context, state) {
@@ -40,38 +53,134 @@ class _DetailStoryPageState extends State<DetailStoryPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            model.story.photoUrl,
-            fit: BoxFit.contain,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          _buildImage(model.story.photoUrl),
+          _buildStoryDetails(model.story),
+          if (model.story.lat != null)
+            _buildLocationWidget(model.story.lat, model.story.lon),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImage(String photoUrl) {
+    return SizedBox(
+      width: double.infinity,
+      child: FadeInImage(
+        placeholder: const AssetImage(ImagePaths.loading),
+        image: NetworkImage(photoUrl),
+        imageErrorBuilder: (context, error, stackTrace) {
+          return Image.asset(ImagePaths.placeholder);
+        },
+      ),
+    );
+  }
+
+  Widget _buildStoryDetails(Story story) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              text: story.name,
+              style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: model.story.name,
-                    style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
-                    children: [
-                      TextSpan(
-                        text: ' ${model.story.description}',
-                        style: blackTextStyle.copyWith(
-                            fontWeight: FontWeight.w200),
-                      ),
-                    ],
-                  ),
+                TextSpan(
+                  text: ' ${story.description}',
+                  style: blackTextStyle.copyWith(fontWeight: FontWeight.w200),
                 ),
-                Text(
-                  model.story.createdAt.toRelativeTime(context),
-                  style: greyTextStyle,
-                )
               ],
             ),
+          ),
+          Text(
+            story.createdAt.toRelativeTime(context),
+            style: greyTextStyle,
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildLocationWidget(double lat, double lon) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.postedAt,
+            style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
+          ),
+          _buildMapContainer(lat, lon),
+          _buildLocationTextField(lat, lon),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMapContainer(double lat, double lon) {
+    return Container(
+      height: 200,
+      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(top: 6),
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(
+          zoom: 18,
+          target: LatLng(lat, lon),
+        ),
+        markers: {
+          Marker(
+            markerId: const MarkerId("source"),
+            position: LatLng(lat, lon),
+          )
+        },
+        myLocationEnabled: false,
+        myLocationButtonEnabled: false,
+        zoomControlsEnabled: false,
+        mapToolbarEnabled: false,
+      ),
+    );
+  }
+
+  Widget _buildLocationTextField(double lat, double lon) {
+    return FutureBuilder(
+      future: getAddress(lat, lon),
+      builder: (context, snapshot) {
+        locationController.text = snapshot.data ?? '';
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextFieldWidget(
+            enabled: false,
+            controller: locationController,
+            maxLines: (locationController.text.length > 40) ? 2 : 1,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<String> getAddress(double lat, double lon) async {
+    final latLng = LatLng(lat, lon);
+    final info =
+        await geo.placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    final place = info.first;
+    final List<String> addressComponents = [];
+    if (place.subLocality != "") addressComponents.add(place.subLocality!);
+    if (place.locality != "") addressComponents.add(place.locality!);
+    if (place.postalCode != "") addressComponents.add(place.postalCode!);
+    if (place.country != "") addressComponents.add(place.country!);
+
+    final address = addressComponents.join(', ');
+    return address;
   }
 
   Widget _buildMessage(String message) {

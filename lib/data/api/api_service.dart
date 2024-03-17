@@ -1,6 +1,6 @@
 import "package:http/http.dart" as http;
-import 'package:dartz/dartz.dart';
 import "package:mauzy_story_app/core.dart";
+import 'package:dartz/dartz.dart';
 
 class ApiService {
   Future<Either<String, LoginResponseModel>> login(
@@ -103,10 +103,15 @@ class ApiService {
     }
   }
 
-  Future<Either<String, ListStoryResponseModel>> getAllStory(
-      String token) async {
+  Future<Either<String, ListStoryResponseModel>> getAllStory(String token,
+      {int? page, int size = 10}) async {
+    final Map<String, String> queryParams = {
+      'page': '$page',
+      'size': '$size',
+      //'location': '$location', // Example parameter value
+    };
     final response = await http.get(
-      Uri.parse(StoryApi.getAllStories),
+      Uri.https('story-api.dicoding.dev', '/v1/stories', queryParams),
       headers: {'Authorization': 'Bearer $token'},
     );
     if (response.statusCode == 200) {

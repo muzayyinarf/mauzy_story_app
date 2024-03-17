@@ -21,8 +21,8 @@ mixin _$UploadEvent {
   String get description => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String token, List<int> bytes, String fileName, String description)
+    required TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)
         addStory,
     required TResult Function(
             List<int> bytes, String fileName, String description)
@@ -31,8 +31,8 @@ mixin _$UploadEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult? Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult? Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,
@@ -40,8 +40,8 @@ mixin _$UploadEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,
@@ -125,7 +125,12 @@ abstract class _$$AddStoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String token, List<int> bytes, String fileName, String description});
+      {String token,
+      List<int> bytes,
+      String fileName,
+      String description,
+      double? lat,
+      double? lon});
 }
 
 /// @nodoc
@@ -143,6 +148,8 @@ class __$$AddStoryImplCopyWithImpl<$Res>
     Object? bytes = null,
     Object? fileName = null,
     Object? description = null,
+    Object? lat = freezed,
+    Object? lon = freezed,
   }) {
     return _then(_$AddStoryImpl(
       null == token
@@ -161,6 +168,14 @@ class __$$AddStoryImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      freezed == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      freezed == lon
+          ? _value.lon
+          : lon // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -168,8 +183,8 @@ class __$$AddStoryImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AddStoryImpl implements _AddStory {
-  const _$AddStoryImpl(
-      this.token, final List<int> bytes, this.fileName, this.description)
+  const _$AddStoryImpl(this.token, final List<int> bytes, this.fileName,
+      this.description, this.lat, this.lon)
       : _bytes = bytes;
 
   @override
@@ -186,10 +201,14 @@ class _$AddStoryImpl implements _AddStory {
   final String fileName;
   @override
   final String description;
+  @override
+  final double? lat;
+  @override
+  final double? lon;
 
   @override
   String toString() {
-    return 'UploadEvent.addStory(token: $token, bytes: $bytes, fileName: $fileName, description: $description)';
+    return 'UploadEvent.addStory(token: $token, bytes: $bytes, fileName: $fileName, description: $description, lat: $lat, lon: $lon)';
   }
 
   @override
@@ -202,12 +221,20 @@ class _$AddStoryImpl implements _AddStory {
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.lon, lon) || other.lon == lon));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, token,
-      const DeepCollectionEquality().hash(_bytes), fileName, description);
+  int get hashCode => Object.hash(
+      runtimeType,
+      token,
+      const DeepCollectionEquality().hash(_bytes),
+      fileName,
+      description,
+      lat,
+      lon);
 
   @JsonKey(ignore: true)
   @override
@@ -218,40 +245,40 @@ class _$AddStoryImpl implements _AddStory {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String token, List<int> bytes, String fileName, String description)
+    required TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)
         addStory,
     required TResult Function(
             List<int> bytes, String fileName, String description)
         addStoryGuest,
   }) {
-    return addStory(token, bytes, fileName, description);
+    return addStory(token, bytes, fileName, description, lat, lon);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult? Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult? Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,
   }) {
-    return addStory?.call(token, bytes, fileName, description);
+    return addStory?.call(token, bytes, fileName, description, lat, lon);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,
     required TResult orElse(),
   }) {
     if (addStory != null) {
-      return addStory(token, bytes, fileName, description);
+      return addStory(token, bytes, fileName, description, lat, lon);
     }
     return orElse();
   }
@@ -289,8 +316,13 @@ class _$AddStoryImpl implements _AddStory {
 }
 
 abstract class _AddStory implements UploadEvent {
-  const factory _AddStory(final String token, final List<int> bytes,
-      final String fileName, final String description) = _$AddStoryImpl;
+  const factory _AddStory(
+      final String token,
+      final List<int> bytes,
+      final String fileName,
+      final String description,
+      final double? lat,
+      final double? lon) = _$AddStoryImpl;
 
   String get token;
   @override
@@ -299,6 +331,8 @@ abstract class _AddStory implements UploadEvent {
   String get fileName;
   @override
   String get description;
+  double? get lat;
+  double? get lon;
   @override
   @JsonKey(ignore: true)
   _$$AddStoryImplCopyWith<_$AddStoryImpl> get copyWith =>
@@ -398,8 +432,8 @@ class _$AddStoryGuestImpl implements _AddStoryGuest {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String token, List<int> bytes, String fileName, String description)
+    required TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)
         addStory,
     required TResult Function(
             List<int> bytes, String fileName, String description)
@@ -411,8 +445,8 @@ class _$AddStoryGuestImpl implements _AddStoryGuest {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult? Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult? Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,
@@ -423,8 +457,8 @@ class _$AddStoryGuestImpl implements _AddStoryGuest {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String token, List<int> bytes, String fileName, String description)?
+    TResult Function(String token, List<int> bytes, String fileName,
+            String description, double? lat, double? lon)?
         addStory,
     TResult Function(List<int> bytes, String fileName, String description)?
         addStoryGuest,

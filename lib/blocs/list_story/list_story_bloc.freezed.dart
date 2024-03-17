@@ -16,37 +16,42 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ListStoryEvent {
+  int? get pageItems => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() get,
+    required TResult Function(int? pageItems) getAllStories,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? get,
+    TResult? Function(int? pageItems)? getAllStories,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? get,
+    TResult Function(int? pageItems)? getAllStories,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Get value) get,
+    required TResult Function(_GetAllStories value) getAllStories,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Get value)? get,
+    TResult? Function(_GetAllStories value)? getAllStories,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Get value)? get,
+    TResult Function(_GetAllStories value)? getAllStories,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ListStoryEventCopyWith<ListStoryEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +60,8 @@ abstract class $ListStoryEventCopyWith<$Res> {
   factory $ListStoryEventCopyWith(
           ListStoryEvent value, $Res Function(ListStoryEvent) then) =
       _$ListStoryEventCopyWithImpl<$Res, ListStoryEvent>;
+  @useResult
+  $Res call({int? pageItems});
 }
 
 /// @nodoc
@@ -66,65 +73,109 @@ class _$ListStoryEventCopyWithImpl<$Res, $Val extends ListStoryEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pageItems = freezed,
+  }) {
+    return _then(_value.copyWith(
+      pageItems: freezed == pageItems
+          ? _value.pageItems
+          : pageItems // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$GetImplCopyWith<$Res> {
-  factory _$$GetImplCopyWith(_$GetImpl value, $Res Function(_$GetImpl) then) =
-      __$$GetImplCopyWithImpl<$Res>;
+abstract class _$$GetAllStoriesImplCopyWith<$Res>
+    implements $ListStoryEventCopyWith<$Res> {
+  factory _$$GetAllStoriesImplCopyWith(
+          _$GetAllStoriesImpl value, $Res Function(_$GetAllStoriesImpl) then) =
+      __$$GetAllStoriesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int? pageItems});
 }
 
 /// @nodoc
-class __$$GetImplCopyWithImpl<$Res>
-    extends _$ListStoryEventCopyWithImpl<$Res, _$GetImpl>
-    implements _$$GetImplCopyWith<$Res> {
-  __$$GetImplCopyWithImpl(_$GetImpl _value, $Res Function(_$GetImpl) _then)
+class __$$GetAllStoriesImplCopyWithImpl<$Res>
+    extends _$ListStoryEventCopyWithImpl<$Res, _$GetAllStoriesImpl>
+    implements _$$GetAllStoriesImplCopyWith<$Res> {
+  __$$GetAllStoriesImplCopyWithImpl(
+      _$GetAllStoriesImpl _value, $Res Function(_$GetAllStoriesImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pageItems = freezed,
+  }) {
+    return _then(_$GetAllStoriesImpl(
+      freezed == pageItems
+          ? _value.pageItems
+          : pageItems // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$GetImpl implements _Get {
-  const _$GetImpl();
+class _$GetAllStoriesImpl implements _GetAllStories {
+  const _$GetAllStoriesImpl(this.pageItems);
+
+  @override
+  final int? pageItems;
 
   @override
   String toString() {
-    return 'ListStoryEvent.get()';
+    return 'ListStoryEvent.getAllStories(pageItems: $pageItems)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GetAllStoriesImpl &&
+            (identical(other.pageItems, pageItems) ||
+                other.pageItems == pageItems));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, pageItems);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetAllStoriesImplCopyWith<_$GetAllStoriesImpl> get copyWith =>
+      __$$GetAllStoriesImplCopyWithImpl<_$GetAllStoriesImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() get,
+    required TResult Function(int? pageItems) getAllStories,
   }) {
-    return get();
+    return getAllStories(pageItems);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? get,
+    TResult? Function(int? pageItems)? getAllStories,
   }) {
-    return get?.call();
+    return getAllStories?.call(pageItems);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? get,
+    TResult Function(int? pageItems)? getAllStories,
     required TResult orElse(),
   }) {
-    if (get != null) {
-      return get();
+    if (getAllStories != null) {
+      return getAllStories(pageItems);
     }
     return orElse();
   }
@@ -132,34 +183,41 @@ class _$GetImpl implements _Get {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Get value) get,
+    required TResult Function(_GetAllStories value) getAllStories,
   }) {
-    return get(this);
+    return getAllStories(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Get value)? get,
+    TResult? Function(_GetAllStories value)? getAllStories,
   }) {
-    return get?.call(this);
+    return getAllStories?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Get value)? get,
+    TResult Function(_GetAllStories value)? getAllStories,
     required TResult orElse(),
   }) {
-    if (get != null) {
-      return get(this);
+    if (getAllStories != null) {
+      return getAllStories(this);
     }
     return orElse();
   }
 }
 
-abstract class _Get implements ListStoryEvent {
-  const factory _Get() = _$GetImpl;
+abstract class _GetAllStories implements ListStoryEvent {
+  const factory _GetAllStories(final int? pageItems) = _$GetAllStoriesImpl;
+
+  @override
+  int? get pageItems;
+  @override
+  @JsonKey(ignore: true)
+  _$$GetAllStoriesImplCopyWith<_$GetAllStoriesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -168,24 +226,24 @@ mixin _$ListStoryState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ListStoryResponseModel data) loaded,
-    required TResult Function(String message) error,
+    required TResult Function(List<ListStory> stories) loaded,
+    required TResult Function(String errorMessage) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ListStoryResponseModel data)? loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(List<ListStory> stories)? loaded,
+    TResult? Function(String errorMessage)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ListStoryResponseModel data)? loaded,
-    TResult Function(String message)? error,
+    TResult Function(List<ListStory> stories)? loaded,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -274,8 +332,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ListStoryResponseModel data) loaded,
-    required TResult Function(String message) error,
+    required TResult Function(List<ListStory> stories) loaded,
+    required TResult Function(String errorMessage) error,
   }) {
     return initial();
   }
@@ -285,8 +343,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ListStoryResponseModel data)? loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(List<ListStory> stories)? loaded,
+    TResult? Function(String errorMessage)? error,
   }) {
     return initial?.call();
   }
@@ -296,8 +354,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ListStoryResponseModel data)? loaded,
-    TResult Function(String message)? error,
+    TResult Function(List<ListStory> stories)? loaded,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -388,8 +446,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ListStoryResponseModel data) loaded,
-    required TResult Function(String message) error,
+    required TResult Function(List<ListStory> stories) loaded,
+    required TResult Function(String errorMessage) error,
   }) {
     return loading();
   }
@@ -399,8 +457,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ListStoryResponseModel data)? loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(List<ListStory> stories)? loaded,
+    TResult? Function(String errorMessage)? error,
   }) {
     return loading?.call();
   }
@@ -410,8 +468,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ListStoryResponseModel data)? loaded,
-    TResult Function(String message)? error,
+    TResult Function(List<ListStory> stories)? loaded,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -468,7 +526,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ListStoryResponseModel data});
+  $Res call({List<ListStory> stories});
 }
 
 /// @nodoc
@@ -482,13 +540,13 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = null,
+    Object? stories = null,
   }) {
     return _then(_$LoadedImpl(
-      null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ListStoryResponseModel,
+      null == stories
+          ? _value._stories
+          : stories // ignore: cast_nullable_to_non_nullable
+              as List<ListStory>,
     ));
   }
 }
@@ -496,14 +554,19 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl(this.data);
+  const _$LoadedImpl(final List<ListStory> stories) : _stories = stories;
 
+  final List<ListStory> _stories;
   @override
-  final ListStoryResponseModel data;
+  List<ListStory> get stories {
+    if (_stories is EqualUnmodifiableListView) return _stories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_stories);
+  }
 
   @override
   String toString() {
-    return 'ListStoryState.loaded(data: $data)';
+    return 'ListStoryState.loaded(stories: $stories)';
   }
 
   @override
@@ -511,11 +574,12 @@ class _$LoadedImpl implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
-            (identical(other.data, data) || other.data == data));
+            const DeepCollectionEquality().equals(other._stories, _stories));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_stories));
 
   @JsonKey(ignore: true)
   @override
@@ -528,10 +592,10 @@ class _$LoadedImpl implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ListStoryResponseModel data) loaded,
-    required TResult Function(String message) error,
+    required TResult Function(List<ListStory> stories) loaded,
+    required TResult Function(String errorMessage) error,
   }) {
-    return loaded(data);
+    return loaded(stories);
   }
 
   @override
@@ -539,10 +603,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ListStoryResponseModel data)? loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(List<ListStory> stories)? loaded,
+    TResult? Function(String errorMessage)? error,
   }) {
-    return loaded?.call(data);
+    return loaded?.call(stories);
   }
 
   @override
@@ -550,12 +614,12 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ListStoryResponseModel data)? loaded,
-    TResult Function(String message)? error,
+    TResult Function(List<ListStory> stories)? loaded,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(data);
+      return loaded(stories);
     }
     return orElse();
   }
@@ -599,9 +663,9 @@ class _$LoadedImpl implements _Loaded {
 }
 
 abstract class _Loaded implements ListStoryState {
-  const factory _Loaded(final ListStoryResponseModel data) = _$LoadedImpl;
+  const factory _Loaded(final List<ListStory> stories) = _$LoadedImpl;
 
-  ListStoryResponseModel get data;
+  List<ListStory> get stories;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -613,7 +677,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String message});
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
@@ -627,12 +691,12 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$ErrorImpl(
-      null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
+      null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -641,14 +705,14 @@ class __$$ErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorImpl implements _Error {
-  const _$ErrorImpl(this.message);
+  const _$ErrorImpl(this.errorMessage);
 
   @override
-  final String message;
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'ListStoryState.error(message: $message)';
+    return 'ListStoryState.error(errorMessage: $errorMessage)';
   }
 
   @override
@@ -656,11 +720,12 @@ class _$ErrorImpl implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -673,10 +738,10 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(ListStoryResponseModel data) loaded,
-    required TResult Function(String message) error,
+    required TResult Function(List<ListStory> stories) loaded,
+    required TResult Function(String errorMessage) error,
   }) {
-    return error(message);
+    return error(errorMessage);
   }
 
   @override
@@ -684,10 +749,10 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(ListStoryResponseModel data)? loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(List<ListStory> stories)? loaded,
+    TResult? Function(String errorMessage)? error,
   }) {
-    return error?.call(message);
+    return error?.call(errorMessage);
   }
 
   @override
@@ -695,12 +760,12 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(ListStoryResponseModel data)? loaded,
-    TResult Function(String message)? error,
+    TResult Function(List<ListStory> stories)? loaded,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message);
+      return error(errorMessage);
     }
     return orElse();
   }
@@ -744,9 +809,9 @@ class _$ErrorImpl implements _Error {
 }
 
 abstract class _Error implements ListStoryState {
-  const factory _Error(final String message) = _$ErrorImpl;
+  const factory _Error(final String errorMessage) = _$ErrorImpl;
 
-  String get message;
+  String get errorMessage;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

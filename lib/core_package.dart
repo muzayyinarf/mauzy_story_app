@@ -10,3 +10,5 @@ export 'package:intl/intl.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_gen/gen_l10n/app_localizations.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
+export 'package:google_maps_flutter/google_maps_flutter.dart';
+export 'package:location/location.dart';

@@ -11,18 +11,18 @@ class App extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           locale: context.read<LocalizationBloc>().state.locale,
-          title: 'Mauzy Story App',
+          title: FlavorConfig.instance.values.titleApp,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
-              primarySwatch: Colors.blue,
-              primaryColor: Colors.blue,
+              primarySwatch: FlavorConfig.instance.color,
+              primaryColor: FlavorConfig.instance.color,
               progressIndicatorTheme:
                   ProgressIndicatorThemeData(color: blueEnabledColor),
               textSelectionTheme: TextSelectionThemeData(
-                cursorColor: Colors.blue,
+                cursorColor: FlavorConfig.instance.color,
                 selectionColor: Colors.blue.shade100,
-                selectionHandleColor: Colors.blue,
+                selectionHandleColor: FlavorConfig.instance.color,
               )),
           routerConfig: router,
         );

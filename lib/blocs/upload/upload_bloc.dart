@@ -14,7 +14,8 @@ class UploadBloc extends Bloc<UploadEvent, UploadState> {
 
       try {
         final result = await datasource.addNewStory(
-            event.token, event.bytes, event.fileName, event.description);
+            event.token, event.bytes, event.fileName, event.description,
+            lat: event.lat, lon: event.lon);
 
         result.fold(
           (l) => emit(_Error(l)),

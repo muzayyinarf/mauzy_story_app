@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mauzy_story_app/core_package.dart';
+import 'package:mauzy_story_app/core.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

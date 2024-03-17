@@ -51,9 +51,13 @@ class StoryCardWidget extends StatelessWidget {
                     height: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: backGroundFieldColor,
-                      image: DecorationImage(
-                          image: NetworkImage(data.photoUrl),
-                          fit: BoxFit.contain),
+                    ),
+                    child: FadeInImage(
+                      placeholder: const AssetImage(ImagePaths.loading),
+                      image: NetworkImage(data.photoUrl),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(ImagePaths.placeholder);
+                      },
                     ),
                   ),
                 ),
@@ -64,15 +68,15 @@ class StoryCardWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Row(
                     children: [
-                      Image.asset('assets/images/love.png'),
+                      Image.asset(ImagePaths.love),
                       const SizedBox(
                         width: 10.0,
                       ),
-                      Image.asset('assets/images/comment.png'),
+                      Image.asset(ImagePaths.comment),
                       const SizedBox(
                         width: 10.0,
                       ),
-                      Image.asset('assets/images/share.png'),
+                      Image.asset(ImagePaths.share),
                     ],
                   ),
                 ),

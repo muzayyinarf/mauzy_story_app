@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  final formKey = GlobalKey<FormState>();
   bool isButtonEnabled = false;
 
   @override
@@ -18,15 +19,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    emailController.addListener(updateButtonState);
-    passwordController.addListener(updateButtonState);
-  }
-
-  void updateButtonState() {
-    setState(() {
-      isButtonEnabled =
-          emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
-    });
   }
 
   @override
@@ -43,63 +35,78 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Mauzy Story',
-                  style: logoStyle.copyWith(
-                      fontSize: 50, fontWeight: FontWeight.w100),
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                TextFieldWidget(
-                  controller: emailController,
-                  hintText: AppLocalizations.of(context)!.typeEmail,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFieldWidget(
-                  controller: passwordController,
-                  obsecureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  hintText: AppLocalizations.of(context)!.typePassword,
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                BlocConsumer<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    state.maybeMap(
-                      orElse: () {},
-                      loggedIn: (value) => context.goNamed(Routes.stories),
-                      error: (value) => snackBar(context, value.message),
-                    );
-                  },
-                  builder: (context, state) {
-                    return state.maybeMap(
-                      loading: (value) => const CircularProgressIndicator(),
-                      orElse: () => ElevatedButtonWidget(
-                        onPressed: isButtonEnabled
-                            ? () {
-                                final model = LoginRequestModel(
-                                    email: emailController.text,
-                                    password: passwordController.text);
-                                context
-                                    .read<AuthBloc>()
-                                    .add(AuthEvent.doLogin(model));
-                              }
-                            : null,
-                        label: AppLocalizations.of(context)!.buttonLogin,
-                      ),
-                    );
-                  },
-                ),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Mauzy Story',
+                    style: logoStyle.copyWith(
+                        fontSize: 50, fontWeight: FontWeight.w100),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  TextFieldWidget(
+                    controller: emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!.validatorEmail;
+                      }
+                      return null;
+                    },
+                    hintText: AppLocalizations.of(context)!.typeEmail,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    controller: passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!.validatorPassword;
+                      }
+                      return null;
+                    },
+                    obsecureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    hintText: AppLocalizations.of(context)!.typePassword,
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      state.maybeMap(
+                        orElse: () {},
+                        loggedIn: (value) => context.goNamed(Routes.stories),
+                        error: (value) => snackBar(context, value.message),
+                      );
+                    },
+                    builder: (context, state) {
+                      return state.maybeMap(
+                        loading: (value) => const CircularProgressIndicator(),
+                        orElse: () => ElevatedButtonWidget(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              final model = LoginRequestModel(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              context
+                                  .read<AuthBloc>()
+                                  .add(AuthEvent.doLogin(model));
+                            }
+                          },
+                          label: AppLocalizations.of(context)!.buttonLogin,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

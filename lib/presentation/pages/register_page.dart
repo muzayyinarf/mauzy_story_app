@@ -14,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   late TextEditingController passwordController;
   late TextEditingController retypePasswordController;
   bool isButtonEnabled = false;
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -21,13 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     retypePasswordController = TextEditingController();
-  }
-
-  void updateButtonState() {
-    setState(() {
-      isButtonEnabled =
-          emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
-    });
   }
 
   @override
@@ -46,105 +40,122 @@ class _RegisterPageState extends State<RegisterPage> {
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.registerTitle,
-                  style: blackTextStyle.copyWith(fontSize: 20),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.registerSubtitle,
-                  style: greyTextStyle.copyWith(fontSize: 14),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFieldWidget(
-                  controller: nameController,
-                  hintText: AppLocalizations.of(context)!.typeName,
-                  keyboardType: TextInputType.name,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFieldWidget(
-                  controller: emailController,
-                  hintText: AppLocalizations.of(context)!.typeEmail,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFieldWidget(
-                  controller: passwordController,
-                  obsecureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  hintText: AppLocalizations.of(context)!.typePassword,
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFieldWidget(
-                  controller: retypePasswordController,
-                  obsecureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  hintText: AppLocalizations.of(context)!.reTypePassword,
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                BlocConsumer<AuthBloc, AuthState>(
-                  listener: (context, state) => state.maybeMap(
-                    orElse: () {
-                      return null;
-                    },
-                    loggedOut: (value) {
-                      snackBar(
-                          context, 'Berhasil mendaftar akun, silahkan login');
-                      context.goNamed(Routes.login);
-                      return null;
-                    },
-                    error: (value) => snackBar(context, value.message),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.registerTitle,
+                    style: blackTextStyle.copyWith(fontSize: 20),
                   ),
-                  builder: (context, state) => state.maybeMap(
-                    loading: (value) => const CircularProgressIndicator(),
-                    orElse: () => ElevatedButtonWidget(
-                      onPressed: () async {
-                        final isEmpty = nameController.text.isEmpty ||
-                            emailController.text.isEmpty ||
-                            passwordController.text.isEmpty ||
-                            retypePasswordController.text.isEmpty;
-                        final isSamePassword = passwordController.text !=
-                            retypePasswordController.text;
-                        if (isEmpty) {
-                          snackBar(
-                            context,
-                            AppLocalizations.of(context)!.emptyField,
-                          );
-                          return;
-                        }
-                        if (isSamePassword) {
-                          snackBar(
-                            context,
-                            AppLocalizations.of(context)!.samePassword,
-                          );
-                          return;
-                        }
+                  Text(
+                    AppLocalizations.of(context)!.registerSubtitle,
+                    style: greyTextStyle.copyWith(fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    controller: nameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!.validatorName;
+                      }
+                      return null;
+                    },
+                    hintText: AppLocalizations.of(context)!.typeName,
+                    keyboardType: TextInputType.name,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    controller: emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!.validatorEmail;
+                      }
+                      return null;
+                    },
+                    hintText: AppLocalizations.of(context)!.typeEmail,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    controller: passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!.validatorPassword;
+                      }
 
-                        final model = RegisterRequestModel(
-                          name: nameController.text,
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        context
-                            .read<AuthBloc>()
-                            .add(AuthEvent.doRegister(model));
+                      return null;
+                    },
+                    obsecureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    hintText: AppLocalizations.of(context)!.typePassword,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    controller: retypePasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!
+                            .validatorRetypePassword;
+                      }
+                      final isSamePassword = passwordController.text !=
+                          retypePasswordController.text;
+                      if (isSamePassword) {
+                        return AppLocalizations.of(context)!.samePassword;
+                      }
+                      return null;
+                    },
+                    obsecureText: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    hintText: AppLocalizations.of(context)!.reTypePassword,
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) => state.maybeMap(
+                      orElse: () {
+                        return null;
                       },
-                      label: AppLocalizations.of(context)!.buttonRegister,
+                      loggedOut: (value) {
+                        snackBar(
+                            context, 'Berhasil mendaftar akun, silahkan login');
+                        context.goNamed(Routes.login);
+                        return null;
+                      },
+                      error: (value) => snackBar(context, value.message),
+                    ),
+                    builder: (context, state) => state.maybeMap(
+                      loading: (value) => const CircularProgressIndicator(),
+                      orElse: () => ElevatedButtonWidget(
+                        onPressed: () async {
+                          final validate = formKey.currentState!.validate();
+
+                          if (validate) {
+                            final model = RegisterRequestModel(
+                              name: nameController.text,
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                            context
+                                .read<AuthBloc>()
+                                .add(AuthEvent.doRegister(model));
+                          }
+                        },
+                        label: AppLocalizations.of(context)!.buttonRegister,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

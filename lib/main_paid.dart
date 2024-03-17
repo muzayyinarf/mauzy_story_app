@@ -7,7 +7,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final apiService = ApiService();
   final prefs = LoginInfoPreference();
-  FlavorConfig();
+
+  FlavorConfig(
+    flavor: FlavorType.paid,
+    color: Colors.blueGrey,
+    values: const FlavorValues(titleApp: 'Mauzy Story+'),
+  );
+
   initializeDateFormatting().then((_) {
     runApp(
       MultiBlocProvider(

@@ -5,6 +5,7 @@ class GlobalVariables {
 }
 
 class StoryApi {
+  static const String base = 'story-api.dicoding.dev/v1';
   static const String register = '$_baseUrl/register';
   static const String login = '$_baseUrl/login';
   static const String addNewStory = '$_baseUrl/stories';

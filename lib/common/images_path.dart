@@ -11,4 +11,6 @@ class ImagePaths {
   static const String search = '${base}search.png';
   static const String share = '${base}share.png';
   static const String upload = '${base}upload.png';
+  static const String placeholder = '${base}placeholder.png';
+  static const String loading = '${base}loading.png';
 }
